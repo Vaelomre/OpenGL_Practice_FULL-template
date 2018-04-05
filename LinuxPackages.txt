@@ -1,0 +1,5 @@
+  debian-подобные дистрибутивы:
+sudo apt-get install cmake zlib1g-dev libz-dev lib32z1-dev libglfw-dev libalut-dev libxrandr-dev mesa-utils libgl1-mesa-dev build-essential xorg-dev glew-utils libglew-dev libglewmx-dev libpng-dev freeglut3-dev
+
+  ubuntu 17.10:
+sudo apt-get install cmake zlib1g-dev lib32z1-dev libglfw3-dev libalut-dev libxrandr-dev mesa-utils libgl1-mesa-dev build-essential xorg-dev glew-utils libglew-dev libpng-dev freeglut3-dev
