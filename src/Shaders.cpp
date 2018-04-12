@@ -28,10 +28,13 @@ GLuint createShader(){
         // vertex attribute
         attribute vec3 aPos;
         attribute vec3 aColor;
+                                                attribute vec2 aTexturePos;
         // uniforms
         uniform mat4 uModelViewProjMat;
+                                                
         // output
         varying vec3 vColor;
+                                                varying vec2 vTexturePos;
 
         void main () {
             vec4 vertexVec4 = vec4(aPos, 1.0);      // последняя компонента 1, тк это точка
@@ -39,13 +42,16 @@ GLuint createShader(){
             gl_Position = uModelViewProjMat * vertexVec4;
             // цвет и текстурные координаты просто пробрасываем для интерполяции
             vColor = aColor;
+            vTexturePos = aTexturePos;
         }
     );
     const char* fragmentShader = STRINGIFY_SHADER(
         varying vec3 vColor;
-
+                                                  varying vec2 vTexturePos;
+                                                  uniform sampler2D uTexture;
         void main () {
-            gl_FragColor = vec4(vColor, 1.0);
+            gl_FragColor = texture2D(uTexture, vTexturePos);
+            
         }
     );
 

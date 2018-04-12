@@ -2,8 +2,9 @@
 
 
 // constructor
-Vertex::Vertex(vec3 inPos, vec3 inColor):
-    pos(inPos),
-    color(inColor){
+Vertex::Vertex(vec3 inPos, vec3 inColor, vec2 inTexturePos)
+    : pos(inPos)
+    , color(inColor)
+    , texturePos(inTexturePos) {
 }
 

@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    window = glfwCreateWindow(640, 480, "Simple example", NULL, NULL);
+    window = glfwCreateWindow(480, 480, "Simple example", NULL, NULL);
     if (!window) {
         glfwTerminate();
         exit(EXIT_FAILURE);
@@ -153,10 +153,12 @@ int main(int argc, char *argv[]) {
     // аттрибуты вершин шейдера
     int posAttribLocation = glGetAttribLocation(shaderProgram, "aPos");
     int colorAttribLocation = glGetAttribLocation(shaderProgram, "aColor");
+    int texturePosAttribLocation = glGetAttribLocation(shaderProgram, "aTexturePos");
     CHECK_GL_ERRORS();
 
     // юниформы шейдера
     int modelViewProjMatrixLocation = glGetUniformLocation(shaderProgram, "uModelViewProjMat");
+    int textureLocation = glGetUniformLocation(shaderProgram, "uTexture");
     CHECK_GL_ERRORS();
 
     // VBO, данные о вершинах
@@ -179,6 +181,9 @@ int main(int argc, char *argv[]) {
     // Цвет вершин
     glEnableVertexAttribArray(colorAttribLocation);
     glVertexAttribPointer(colorAttribLocation, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), OFFSETOF(Vertex, color));
+    // Texture coords
+    glEnableVertexAttribArray(texturePosAttribLocation);
+    glVertexAttribPointer(texturePosAttribLocation, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), OFFSETOF(Vertex, texturePos));
     // off
     glBindVertexArray(0);
     CHECK_GL_ERRORS();
@@ -224,12 +229,16 @@ int main(int argc, char *argv[]) {
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glUseProgram (shaderProgram);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, textureId);
 
         // матрица модель-вид-проекция
         mat4 modelViewProjMatrix = mat4(1.0);
+        modelViewProjMatrix = rotate(modelViewProjMatrix, (float)(time * 0.1), vec3(0, 0, 1));
 
         // выставляем матрицу трансформации в пространство OpenGL
         glUniformMatrix4fv(modelViewProjMatrixLocation, 1, false, glm::value_ptr(modelViewProjMatrix));
+        glUniform1i(textureLocation, 0);
 
         // рисуем
         glBindVertexArray(vao);
