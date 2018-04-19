@@ -234,8 +234,8 @@ int main(int argc, char *argv[]) {
 
         // матрица модель-вид-проекция
         mat4 modelViewProjMatrix = mat4(1.0);
-//        modelViewProjMatrix = glm::translate(modelViewProjMatrix, vec3(-0.5f, -0.5f, 0.5f));
-        modelViewProjMatrix = rotate(modelViewProjMatrix, (float)(time * 0.75), vec3(0.f, 1.f, 1.f));
+        modelViewProjMatrix = glm::translate(modelViewProjMatrix, vec3(-0.25f, -0.25f, 0.25f));
+        modelViewProjMatrix = rotate(modelViewProjMatrix, (float)(time * 0.75), vec3(1.f, 1.f, 1.f));
       
         
         // выставляем матрицу трансформации в пространство OpenGL
