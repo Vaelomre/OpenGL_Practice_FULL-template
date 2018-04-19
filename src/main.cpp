@@ -234,15 +234,17 @@ int main(int argc, char *argv[]) {
 
         // матрица модель-вид-проекция
         mat4 modelViewProjMatrix = mat4(1.0);
-        modelViewProjMatrix = rotate(modelViewProjMatrix, (float)(time * 0.1), vec3(0, 0, 1));
-
+//        modelViewProjMatrix = glm::translate(modelViewProjMatrix, vec3(-0.5f, -0.5f, 0.5f));
+        modelViewProjMatrix = rotate(modelViewProjMatrix, (float)(time * 0.75), vec3(0.f, 1.f, 1.f));
+      
+        
         // выставляем матрицу трансформации в пространство OpenGL
         glUniformMatrix4fv(modelViewProjMatrixLocation, 1, false, glm::value_ptr(modelViewProjMatrix));
         glUniform1i(textureLocation, 0);
 
         // рисуем
         glBindVertexArray(vao);
-        glDrawArrays(GL_TRIANGLES, 0, triangleVertexCount); // draw points 0-3 from the currently bound VAO with current in-use shader
+        glDrawArrays(GL_QUADS, 0, triangleVertexCount); // draw points 0-3 from the currently bound VAO with current in-use shader
         glBindVertexArray(0);
 
         glfwSwapBuffers(window);
